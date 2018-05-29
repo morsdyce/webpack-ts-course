@@ -1,5 +1,6 @@
 export function render(selector, component) {
-  const componentToRender = typeof component === 'Promise' ?
+  const isPromise = component instanceof Promise;
+  const componentToRender = isPromise ?
     component :
     Promise.resolve(component);
 
