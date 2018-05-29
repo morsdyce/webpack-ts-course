@@ -1,5 +1,5 @@
 import { renderRoute } from './utils';
-import { Index } from './routes';
+import { Index } from './routes/index';
 import About from './routes/about';
 import Contact from './routes/contact';
 
