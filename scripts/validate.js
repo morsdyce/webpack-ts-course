@@ -17,12 +17,15 @@ try {
       path: path.join(__dirname, 'dist'),
       publicPath: "/"
     },
+    resolve: {
+      extensions: ['.ts', '.js', '.json']
+    },
     module: {
       loaders: [
         {
-          test: /\.js$/,
+          test: /\.ts$/,
           exclude: /node_modules/,
-          loader: 'babel-loader'
+          loader: 'ts-loader'
         }
       ]
     },
