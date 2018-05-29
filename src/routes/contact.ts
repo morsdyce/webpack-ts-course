@@ -1,8 +1,10 @@
 import { renderNavigation } from '../utils';
 
-export function Index() {
+function Contact() {
   return `
-    <h1>Index</h1>
+    <h1>Contact</h1>
     ${renderNavigation()}
   `;
 }
+
+export default Contact;
