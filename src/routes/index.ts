@@ -1,3 +1,6 @@
+import 'react';
+import 'superagent';
+
 import { renderNavigation } from '../utils';
 
 export function Index() {
