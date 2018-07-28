@@ -1,12 +1,10 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    app: './src/index.ts',
-    vendor: ['react', 'superagent']
+    app: './src/index.ts'
   },
   output: {
     filename: '[name].js',
@@ -16,7 +14,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.json']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.ts?$/,
         exclude: /node_modules/,
@@ -25,10 +23,10 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       }
     ]
   },
@@ -37,18 +35,21 @@ module.exports = {
       template: path.join(__dirname, 'index.html')
     }),
 
-    new ExtractTextPlugin('styles.css'),
+    new MiniCssExtractPlugin({ filename: 'styles.css' }),
+  ],
+  optimization: {
+    namedModules: true,
+    noEmitOnErrors: true,
+    concatenateModules: true,
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /node_modules/,
+          chunks: 'all'
+        }
+      }
+    }
 
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-
-      minChunks: Infinity,
-      // (with more entries, this ensures that no other module
-      //  goes into the vendor chunk)
-    }),
-
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.ModuleConcatenationPlugin()
-  ]
+  }
 };
