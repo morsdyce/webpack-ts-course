@@ -1,6 +1,4 @@
 import webpack from 'webpack';
-import path from 'path';
-import fs from 'fs';
 
 interface Options {
   filename: string,
@@ -25,9 +23,11 @@ class AppVersionPlugin {
   apply(compiler: webpack.Compiler) {
     this.compiler = compiler;
 
-    this.compiler.hooks.done.tap(pluginName, (stats: webpack.Stats) => {
-      const fullPath = path.join(stats.compilation.outputOptions.path, this.options.filename);
-      fs.writeFileSync(fullPath, this.options.version);
+    this.compiler.hooks.emit.tap(pluginName, (compiliation: webpack.compilation.Compilation) => {
+      compiliation.assets[this.options.filename] = {
+        source: () => this.options.version,
+        size: () => this.options.version.length
+      }
     });
   }
 }
