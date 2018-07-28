@@ -1,14 +1,18 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import AppVersionPlugin from './plugins/app-version-plugin';
 
-module.exports = {
+const distPath:string = path.join(__dirname, 'dist');
+
+const config: webpack.Configuration = {
   entry: {
     app: './src/index.ts'
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, 'dist'),
+    path: distPath,
   },
   resolve: {
     extensions: ['.ts', '.js', '.json']
@@ -36,6 +40,8 @@ module.exports = {
     }),
 
     new MiniCssExtractPlugin({ filename: 'styles.css' }),
+
+    new AppVersionPlugin({ filename: 'version.txt', version: require('./package.json').version })
   ],
   optimization: {
     namedModules: true,
@@ -53,3 +59,5 @@ module.exports = {
 
   }
 };
+
+export default config;
