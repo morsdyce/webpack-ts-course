@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/morsdyce/webpack-workshop#readme",
   "devDependencies": {
+    "@types/node": "10.5.4",
+    "@types/webpack": "4.4.8",
     "copy-webpack-plugin": "4.5.0",
     "css-loader": "0.28.10",
     "file-loader": "0.11.2",
@@ -27,6 +29,7 @@
     "http-server": "0.11.1",
     "style-loader": "0.20.2",
     "ts-loader": "^3.5.0",
+    "ts-node": "7.0.0",
     "typescript": "^2.8.3",
     "url-loader": "1.0.1",
     "webpack": "3.11.0",
